@@ -1,0 +1,8 @@
+<resources>
+    <integer name="cosa1int">5</integer>
+    <integer name="cosa2int">7</integer>
+    <integer name="cosa3int">2</integer>
+    <integer name="cosa4int">1</integer>
+    <integer name="cosa5int">3</integer>
+
+</resources>

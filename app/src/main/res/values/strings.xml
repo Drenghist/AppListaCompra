@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppListaCompra</string>
+    <string name="cosa1">Patatas</string>
+    <string name="cosa2">Chrizos</string>
+    <string name="cosa3">Chocolate</string>
+    <string name="cosa4">Azúcar</string>
+    <string name="cosa5">Aceite</string>
+</resources>
