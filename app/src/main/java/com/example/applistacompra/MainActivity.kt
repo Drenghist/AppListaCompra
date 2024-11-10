@@ -115,7 +115,7 @@ fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
 
         Button(
             onClick = {
-                val nuevoItem = Lista(R.string.cosa1,R.integer.cosa5int)
+                val nuevoItem = Lista(concepto,cantidad)
                 listaInicial.add(nuevoItem)
             },
             modifier = Modifier.padding(bottom=12.dp)
@@ -126,8 +126,8 @@ fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
         LazyColumn(modifier = Modifier) {
             items(listaInicial) { Lista ->
                     ListaItem(
-                        concepto = stringResource(Lista.stringResourceId),
-                        cantidad = integerResource(Lista.integerResourceId),
+                        concepto = Lista.stringResourceId,
+                        cantidad = Lista.integerResourceId,
                         modifier = Modifier,
                     )
             }
