@@ -40,14 +40,16 @@ import com.example.applistacompra.data.Datasource
 import com.example.applistacompra.model.Lista
 import com.example.applistacompra.ui.theme.AppListaCompraTheme
 
-
+var listaActualizable = Datasource().loadLista().toMutableList()
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppListaCompraTheme {
-                ListaApp(modifier = Modifier)
+
+
+                ListaApp(listaActualizable, modifier = Modifier)
             }
         }
     }
@@ -56,7 +58,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //-AR: El scaffold se empieza a definir aquí, ya no arriba
-fun ListaApp(modifier : Modifier){
+fun ListaApp(listaActualizable : MutableList<Lista>, modifier : Modifier){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -64,12 +66,13 @@ fun ListaApp(modifier : Modifier){
             )
         }
     ) {
-        BodyContent(listaInicial = Datasource().loadLista(),modifier = modifier.padding(it))
+        //BodyContent(listaInicial = Datasource().loadLista(),modifier = modifier.padding(it))
+        BodyContent(listaInicial = listaActualizable,modifier = modifier.padding(it))
     }
 }
 
 @Composable
-fun BodyContent (listaInicial : List<Lista> ,modifier: Modifier){
+fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
     var concepto by remember { mutableStateOf("") }
     var cantidad : Int by remember { mutableIntStateOf(1) }
 
@@ -111,7 +114,10 @@ fun BodyContent (listaInicial : List<Lista> ,modifier: Modifier){
         )
 
         Button(
-            onClick = {},
+            onClick = {
+                val nuevoItem = Lista(R.string.cosa1,R.integer.cosa5int)
+                listaInicial.add(nuevoItem)
+            },
             modifier = Modifier.padding(bottom=12.dp)
         ){
             Text("Guardar")
@@ -142,6 +148,17 @@ fun ListaItem(concepto : String, cantidad: Int, modifier: Modifier = Modifier){
             Text(concepto)
             Spacer(modifier = Modifier.weight(1f))
             Text(cantidad.toString())
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = {
+                    //-AR: introduzco la info de eliminar info
+
+                })
+                {
+                    Text("Borrar")
+                }
+
+
         }
     }
 }
@@ -150,5 +167,5 @@ fun ListaItem(concepto : String, cantidad: Int, modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    ListaApp(modifier = Modifier)
+    ListaApp(listaActualizable,modifier = Modifier)
 }
