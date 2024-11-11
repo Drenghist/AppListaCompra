@@ -48,7 +48,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppListaCompraTheme {
                 var listaActualizable = Datasource().loadLista().toMutableList()
-                ListaApp(listaActualizable, modifier = Modifier)
+                var labdaActualizaLista = { listaActualizable=listaActualizable.toMutableList() }
+                ListaApp(listaActualizable,labdaActualizaLista, modifier = Modifier)
             }
         }
     }
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //-AR: El scaffold se empieza a definir aquí, ya no arriba
-fun ListaApp(listaActualizable : MutableList<Lista>, modifier : Modifier){
+fun ListaApp(listaActualizable : MutableList<Lista>,labdaActualizaLista: () -> Unit, modifier : Modifier){
 
     Scaffold(
         topBar = {
@@ -67,12 +68,12 @@ fun ListaApp(listaActualizable : MutableList<Lista>, modifier : Modifier){
         }
     ) {
         //BodyContent(listaInicial = Datasource().loadLista(),modifier = modifier.padding(it))
-        BodyContent(listaInicial = listaActualizable,modifier = modifier.padding(it))
+        BodyContent(listaInicial = listaActualizable,labdaActualizaLista ,modifier = modifier.padding(it))
     }
 }
 
 @Composable
-fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
+fun BodyContent (listaInicial : MutableList<Lista>,labdaActualizaLista: () -> Unit,modifier: Modifier){
     var concepto by remember { mutableStateOf("") }
     var cantidad : Int by remember { mutableIntStateOf(1) }
 
@@ -118,6 +119,7 @@ fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
                 val nuevoItem = Lista(R.string.cosa1,R.integer.cosa5int)
                 listaInicial.add(nuevoItem)
                 //listaInicial = listaInicial.toMutableList()
+                labdaActualizaLista()
                 //-AR:Esto no funciona, intuyo que necesita elevación
             },
             modifier = Modifier.padding(bottom=12.dp)
@@ -170,5 +172,7 @@ fun ListaItem(concepto : String, cantidad: Int, modifier: Modifier = Modifier){
 @Composable
 fun GreetingPreview() {
     var listaActualizable = Datasource().loadLista().toMutableList()
-    ListaApp(listaActualizable,modifier = Modifier)
+    var labdaActualizaLista = { listaActualizable=listaActualizable.toMutableList() }
+    ListaApp(listaActualizable,labdaActualizaLista, modifier = Modifier)
+
 }
