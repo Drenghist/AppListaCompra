@@ -117,7 +117,8 @@ fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
             onClick = {
                 val nuevoItem = Lista(R.string.cosa1,R.integer.cosa5int)
                 listaInicial.add(nuevoItem)
-                listaInicial = listaInicial.toMutableList()
+                //listaInicial = listaInicial.toMutableList()
+                //-AR:Esto no funciona, intuyo que necesita elevación
             },
             modifier = Modifier.padding(bottom=12.dp)
         ){
