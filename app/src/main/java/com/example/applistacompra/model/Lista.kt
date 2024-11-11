@@ -4,8 +4,8 @@ import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 
 data class Lista(
-    val stringResourceId: String,
-    val integerResourceId: Int
+    @StringRes val stringResourceId: Int,
+    @IntegerRes val integerResourceId: Int
 )
 
 

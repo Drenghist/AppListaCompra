@@ -40,15 +40,14 @@ import com.example.applistacompra.data.Datasource
 import com.example.applistacompra.model.Lista
 import com.example.applistacompra.ui.theme.AppListaCompraTheme
 
-var listaActualizable = Datasource().loadLista().toMutableList()
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AppListaCompraTheme {
-
-
+                var listaActualizable = Datasource().loadLista().toMutableList()
                 ListaApp(listaActualizable, modifier = Modifier)
             }
         }
@@ -59,6 +58,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 //-AR: El scaffold se empieza a definir aquí, ya no arriba
 fun ListaApp(listaActualizable : MutableList<Lista>, modifier : Modifier){
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -115,8 +115,9 @@ fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
 
         Button(
             onClick = {
-                val nuevoItem = Lista(concepto,cantidad)
+                val nuevoItem = Lista(R.string.cosa1,R.integer.cosa5int)
                 listaInicial.add(nuevoItem)
+                listaInicial = listaInicial.toMutableList()
             },
             modifier = Modifier.padding(bottom=12.dp)
         ){
@@ -126,8 +127,8 @@ fun BodyContent (listaInicial : MutableList<Lista> ,modifier: Modifier){
         LazyColumn(modifier = Modifier) {
             items(listaInicial) { Lista ->
                     ListaItem(
-                        concepto = Lista.stringResourceId,
-                        cantidad = Lista.integerResourceId,
+                        concepto = stringResource(Lista.stringResourceId),
+                        cantidad = integerResource(Lista.integerResourceId),
                         modifier = Modifier,
                     )
             }
@@ -167,5 +168,6 @@ fun ListaItem(concepto : String, cantidad: Int, modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
+    var listaActualizable = Datasource().loadLista().toMutableList()
     ListaApp(listaActualizable,modifier = Modifier)
 }
